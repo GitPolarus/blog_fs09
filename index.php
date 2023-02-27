@@ -5,7 +5,7 @@ use App\Controllers\HomeController;
 
 require_once("vendor/autoload.php");
 
-if (isset($_GET['p'])) {
+if (!empty($_GET['p'])) {
     $params = explode("/", $_GET['p']);
     $className = ucfirst($params[0]) . "Controller";
 

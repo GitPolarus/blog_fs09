@@ -8,7 +8,7 @@ class User extends Model
     private string $name;
     private string $email;
     private string $pass;
-    private string $photo;
+    private ?string $photo;
     private bool $activated;
     private string $role;
 
@@ -28,6 +28,27 @@ class User extends Model
      */
     public function create()
     {
+        $sql = "insert into " . $this->table . " (name, email, password, photo, role, activated) values (:name, :email, :password, :photo, :role, :activated)";
+
+        // echo $sql;
+        $params = [
+            "name" => $this->name,
+            "email" => $this->email,
+            "password" => $this->pass,
+            "photo" => $this->photo,
+            "role" => $this->role,
+            "activated" => $this->activated,
+        ];
+        $stmt = $this->connexion->prepare($sql);
+
+        if ($stmt->execute($params)) {
+            $_SESSION["success"] = "User Account created successfully";
+            return true;
+        } else {
+            $_SESSION["error"] = "User Account creation failed";
+            return false;
+        }
+
     }
 
     /**
@@ -54,12 +75,12 @@ class User extends Model
 
     /**
      * @param string $role 
-     * @return self
+     * 
      */
-    public function setRole(string $role): self
+    public function setRole(string $role)
     {
         $this->role = $role;
-        return $this;
+
     }
 
     /**
@@ -72,12 +93,12 @@ class User extends Model
 
     /**
      * @param bool $activated 
-     * @return self
+     * 
      */
-    public function setActivated(bool $activated): self
+    public function setActivated(bool $activated)
     {
         $this->activated = $activated;
-        return $this;
+
     }
 
     /**
@@ -90,12 +111,12 @@ class User extends Model
 
     /**
      * @param string $photo 
-     * @return self
+     * 
      */
-    public function setPhoto(string $photo): self
+    public function setPhoto(?string $photo)
     {
         $this->photo = $photo;
-        return $this;
+
     }
 
     /**
@@ -108,12 +129,12 @@ class User extends Model
 
     /**
      * @param string $pass 
-     * @return self
+     * 
      */
-    public function setPass(string $pass): self
+    public function setPass(string $pass)
     {
-        $this->pass = $pass;
-        return $this;
+        $this->pass = password_hash($pass, PASSWORD_BCRYPT);
+
     }
 
     /**
@@ -126,12 +147,11 @@ class User extends Model
 
     /**
      * @param string $email 
-     * @return self
+     * 
      */
-    public function setEmail(string $email): self
+    public function setEmail(string $email)
     {
         $this->email = $email;
-        return $this;
     }
 
     /**

@@ -8,7 +8,7 @@ class Connexion
     const SERVER = "localhost";
     const USER = "root";
     const PASS = "";
-    const DB = "stock_db";
+    const DB = "blog_fs09";
 
     public static function getConnexion()
     {
