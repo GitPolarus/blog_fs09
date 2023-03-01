@@ -3,10 +3,9 @@ namespace App\Helpers;
 
 class Helper
 {
-
-    public static function uploadFile($formName)
+    public static $errors = [];
+    public static function uploadFile($formName, $required = false)
     {
-        $errors = [];
 
         if (!file_exists("uploads")) {
             mkdir("uploads");
@@ -19,12 +18,14 @@ class Helper
 
 
         if (move_uploaded_file($_FILES[$formName]["tmp_name"], $target_file)) {
-            array_push($errors, "Your file has been uploaded Successfully.");
-            $_SESSION["errors"] = $errors;
+            // array_push(self::$errors, "Your file has been uploaded Successfully.");
+            // $_SESSION["success"] = self::$errors;
             return $target_file;
         } else {
-            array_push($errors, "Sorry, there was an error uploading your file.");
-            $_SESSION["errors"] = $errors;
+            if ($required) {
+                array_push(self::$errors, "Sorry, there was an error uploading your file.");
+                $_SESSION["errors"] = self::$errors;
+            }
             return null;
         }
 
@@ -32,14 +33,16 @@ class Helper
 
     public static function getInputValue($inputName, $required = true)
     {
-        $errors = [];
+
+
         if (empty(trim($_REQUEST[$inputName]))) {
             if ($required) {
-                array_push($errors, "$inputName is empty");
-                $_SESSION["errors"] = $errors;
+                array_push(self::$errors, "$inputName is empty");
+                $_SESSION["errors"] = self::$errors;
+
             }
 
-            return null;
+            return "";
         }
         return htmlspecialchars($_REQUEST[$inputName]);
     }

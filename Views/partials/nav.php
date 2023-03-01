@@ -10,12 +10,23 @@
                 <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="/blog_fs09/">Home</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/blog_fs09/user/loginview">Login</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/blog_fs09/user/registerview">Register</a>
-                </li>
+
+                <?php if (isset($_SESSION["user"])): ?>
+                    <li class="nav-item d-flex align-items-center">
+                        <h6 class="pt-2 px-2">
+                            <?= $_SESSION["user"]["name"] ?>
+                        </h6>
+                        <a class=" nav-link text-white btn btn-sm btn-danger" href="/blog_fs09/user/logout">Logout</a>
+                    </li>
+                <?php else: ?>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/blog_fs09/user/loginview">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/blog_fs09/user/registerview">Register</a>
+                    </li>
+                <?php endif; ?>
+
 
             </ul>
 

@@ -2,7 +2,7 @@
 $title = "Register";
 ob_start();
 ?>
-<main class="form-signin w-50 m-auto text-center">
+<main class="form-signin w-50 m-auto text-center mt-3">
     <form method="post" action="/blog_fs09/user/register" enctype="multipart/form-data">
 
         <h1 class="h3 mb-3 fw-normal">sign Up</h1>

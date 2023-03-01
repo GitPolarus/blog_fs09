@@ -2,6 +2,7 @@
 namespace App\Models;
 
 use App\Helpers\Connexion;
+use PDO;
 
 class User extends Model
 {
@@ -49,6 +50,33 @@ class User extends Model
             return false;
         }
 
+    }
+
+    public function login($email, $pass)
+    {
+
+        $sql = "select * from " . $this->table . " where email=:email";
+
+        // echo $sql;
+        $params = [
+            "email" => $email,
+        ];
+        $stmt = $this->connexion->prepare($sql);
+        $stmt->execute($params);
+        $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($user) {
+            if (password_verify($pass, $user["password"])) {
+                $_SESSION["user"] = $user;
+                return true;
+            } else {
+                $_SESSION["error"] = "Wrong Password";
+                return false;
+            }
+        } else {
+            $_SESSION["error"] = "Email not existing";
+            return false;
+        }
     }
 
     /**
