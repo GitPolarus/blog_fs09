@@ -12,12 +12,18 @@
                 </li>
 
                 <?php if (isset($_SESSION["user"])): ?>
+                    <?php if ($_SESSION["user"]["role"] == "Admin"): ?>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/blog_fs09/admin">Admin Board</a>
+                        </li>
+                    <?php endif; ?>
                     <li class="nav-item d-flex align-items-center">
                         <h6 class="pt-2 px-2">
                             <?= $_SESSION["user"]["name"] ?>
                         </h6>
                         <a class=" nav-link text-white btn btn-sm btn-danger" href="/blog_fs09/user/logout">Logout</a>
                     </li>
+
                 <?php else: ?>
                     <li class="nav-item">
                         <a class="nav-link" href="/blog_fs09/user/loginview">Login</a>

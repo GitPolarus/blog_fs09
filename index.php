@@ -15,7 +15,12 @@ if (!empty($_GET['p'])) {
     // $userC = new \App\Controllers\UserController();
     if (isset($params[1])) {
         $methode = $params[1];
-        $controller->$methode();
+        if (isset($params[2])) {
+            $parameter = $params[2];
+            $controller->$methode($parameter);
+        } else {
+            $controller->$methode();
+        }
     } else {
         $controller->index();
     }

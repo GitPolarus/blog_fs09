@@ -13,5 +13,3 @@
 </head>
 
 <body>
-
-    <?php include("Views/partials/nav.php");

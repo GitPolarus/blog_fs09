@@ -1,6 +1,6 @@
 <?php
-
 require_once("Views/partials/header.php");
+include("Views/partials/nav.php");
 ?>
 <div class="container">
     <?php if (isset($_SESSION["errors"])): ?>

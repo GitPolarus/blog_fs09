@@ -67,6 +67,9 @@ class UserController extends Controller
         if (count(Helper::$errors) == 0) {
 
             if ($user->login($email, $pass)) {
+                if ($_SESSION["user"]["role"] == "Admin") {
+                    header("location:/blog_fs09/admin");
+                }
                 header("location:/blog_fs09/home");
             } else {
                 header("location:/blog_fs09/user/loginview");
@@ -76,10 +79,5 @@ class UserController extends Controller
         }
     }
 
-    public function logout()
-    {
-        unset($_SESSION["user"]);
-        $_SESSION["success"] = "You Logged Out Successfully";
-        header("location:/blog_fs09/user/loginview");
-    }
+
 }
